@@ -8,11 +8,15 @@ import { MailConsumer } from './mail/mail.consumer';
 
 @Module({
   imports: [
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('REDIS_HOST', 'localhost'),
+          port: configService.get('REDIS_PORT', 6379, { infer: true }),
+        },
+      }),
     }),
     BullModule.registerQueue({
       name: 'mail',

@@ -12,7 +12,5 @@ import config from './config/config';
     UserModule,
     AuthModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

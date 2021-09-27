@@ -7,20 +7,23 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
 import JwtStrategy from './strategies/jwt.strategy';
 import { HashProvider } from '@common/providers/hash/hash.provider';
+import { QueueModule } from '@common/providers/queue/queue.module';
 
 @Module({
   imports: [
     UserModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET', 'secret'),
         signOptions: {
           expiresIn: '30d',
         },
       }),
-      inject: [ConfigService],
     }),
+
+    QueueModule,
   ],
   providers: [HashProvider, AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
