@@ -3,12 +3,14 @@ import { UserService } from '@modules/user/user.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { HashProvider } from '@common/providers/hash/hash.provider';
 import { SignInDTO } from './DTOs/SignIn.dto';
+import { MailProducer } from '@common/providers/queue/mail/mail.producer';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private hashProvider: HashProvider,
+    private mailProducer: MailProducer,
   ) {}
 
   async userVerification(data: Prisma.UserWhereUniqueInput) {
@@ -52,5 +54,18 @@ export class AuthService {
     return newUser;
   }
 
+  testeMail() {
+    // return { path: process.cwd() + '/src/common/templates' };
+    return this.mailProducer.sendMail({
+      to: 'hermina.pagac44@ethereal.email',
+      from: 'Alek Tobias <alektobias@dev.com>',
+      context: {
+        msg: 'msg 55454555',
+      },
+      subject: 'subject',
+      template: './template',
+      text: 'text',
+    });
+  }
   // validateJWT() {}
 }
