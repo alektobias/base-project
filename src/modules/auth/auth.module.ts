@@ -8,10 +8,12 @@ import { UserModule } from '@modules/user/user.module';
 import JwtStrategy from './strategies/jwt.strategy';
 import { HashProvider } from '@common/providers/hash/hash.provider';
 import { QueueModule } from '@common/providers/queue/queue.module';
+import { TokenModule } from '@modules/token/token.module';
 
 @Module({
   imports: [
     UserModule,
+    TokenModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

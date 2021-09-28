@@ -9,4 +9,7 @@ export class SignInDTO {
 
   @IsNotEmpty()
   name: string;
+
+  @IsNotEmpty()
+  username: string;
 }

@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://admin:pass@localhost:5432/base-project?schema=public" 
+  url      = "postgresql://admin:pass@localhost:5432/base-project?schema=public"
 }
 
 generator client {
@@ -11,11 +11,19 @@ generator client {
 }
 
 model User {
-  id               String             @id @default(uuid()) 
-  email            String             @unique
-  name             String
-  password         String
-  avatar_url       String?             
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  id         String   @id @default(uuid())
+  email      String   @unique
+  username   String
+  name       String
+  password   String
+  avatar_url String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Token {
+  id        String   @id @default(uuid())
+  userId    String
+  expiresIn String?
+  createdAt DateTime @default(now())
 }

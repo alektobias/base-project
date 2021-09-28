@@ -8,6 +8,7 @@ export class UserEntity implements User {
   @IsEmail()
   email: string;
 
+  username: string;
   name: string;
 
   @Length(8)
